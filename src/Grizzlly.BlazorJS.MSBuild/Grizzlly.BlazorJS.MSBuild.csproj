@@ -1,0 +1,123 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<LangVersion>8.0</LangVersion>
+		<PackageId>Grizzlly.BlazorJS.MSBuild</PackageId>
+
+		<IsPackable>true</IsPackable>
+		<Version>0.0.1</Version>
+		<Title>Grizzlly.BlazorJS.MSBuild</Title>
+		<Authors>Andrei Stan</Authors>
+		<Description>Build UI with Vue components! React coming soon...</Description>
+		<PackageTags>jsinterop</PackageTags>
+		<Copyright>Copyright ©Andrei Stan 2023</Copyright>
+
+		<TargetsForTfmSpecificBuildOutput>
+			$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage
+		</TargetsForTfmSpecificBuildOutput>
+
+		<BuildOutputTargetFolder>tasks</BuildOutputTargetFolder>
+		<GenerateDependencyFile>true</GenerateDependencyFile>
+
+		<NoPackageAnalysis>true</NoPackageAnalysis>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
+		<AutoGenerateAssemblyVersion>true</AutoGenerateAssemblyVersion>
+
+		<PackageLayoutOutputPath>bin\$(Configuration)\$(PackageId)\</PackageLayoutOutputPath>
+
+		<TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.6.3" ExcludeAssets="Runtime" />
+		<PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="7.0.0" />
+	</ItemGroup>
+
+	<ItemDefinitionGroup>
+		<PackageReference>
+			<PrivateAssets>all</PrivateAssets>
+			<Publish>true</Publish>
+		</PackageReference>
+	</ItemDefinitionGroup>
+
+	<ItemGroup>
+		<Content Include="build\*" PackagePath="build\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Update="build\env.d.ts">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Update="build\main.ts">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Update="build\package.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Update="build\tsconfig.app.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Update="build\tsconfig.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Update="build\tsconfig.node.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Update="build\vite.config.ts">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Update="build\vueimport.ts">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+
+	<Target Name="CopyFileSystemGlobbing" BeforeTargets="PrepareAdditionalFilesToLayout" AfterTargets="ResolveReferences">
+		<ItemGroup>
+			<_FileSystemGlobbing Include="@(ReferencePath)" Condition="'%(ReferencePath.NuGetPackageId)' == 'Microsoft.Extensions.FileSystemGlobbing'" />
+			<_FileSystemGlobbingContent Include="@(_FileSystemGlobbing)" TargetPath="tasks\$(TargetFramework)\%(_FileSystemGlobbing.Filename)%(_FileSystemGlobbing.Extension)" />
+			<AdditionalContent Include="@(_FileSystemGlobbing)" PackagePath="tasks\$(TargetFramework)" />
+		</ItemGroup>
+
+		<Copy SourceFiles="@(_FileSystemGlobbingContent)" DestinationFiles="@(_FileSystemGlobbingContent->'$(PackageLayoutOutputPath)%(TargetPath)')">
+			<Output TaskParameter="DestinationFiles" ItemName="FileWrites" />
+		</Copy>
+	</Target>
+
+	<Target Name="PrepareAdditionalFilesToLayout" BeforeTargets="AssignTargetPaths">
+		<ItemGroup>
+			<LayoutFile Include="@(AdditionalContent)" Condition="'%(AdditionalContent.PackagePath)' != '' and '%(AdditionalContent.PackagePath)' != 'Icon.png'">
+				<TargetPath>%(AdditionalContent.PackagePath)\%(AdditionalContent.RecursiveDir)%(AdditionalContent.Filename)%(AdditionalContent.Extension)</TargetPath>
+			</LayoutFile>
+		</ItemGroup>
+	</Target>
+
+	<Target Name="CopyProjectReferencesToPackage" DependsOnTargets="ResolveReferences">
+		<ItemGroup>
+			<!-- The TargetPath is the path inside the package that the source file will be placed. This is already precomputed in the ReferenceCopyLocalPaths items' DestinationSubPath, so reuse it here. -->
+			<BuildOutputInPackage Include="@(ReferenceCopyLocalPaths)" TargetPath="%(ReferenceCopyLocalPaths.DestinationSubPath)" />
+		</ItemGroup>
+	</Target>
+
+	<Target Name="AddBuildDependencyFileToBuiltProjectOutputGroupOutput" BeforeTargets="BuiltProjectOutputGroup" Condition=" '$(GenerateDependencyFile)' == 'true'">
+
+		<ItemGroup>
+			<BuiltProjectOutputGroupOutput Include="$(ProjectDepsFilePath)" TargetPath="$(ProjectDepsFileName)" FinalOutputPath="$(ProjectDepsFilePath)" />
+		</ItemGroup>
+	</Target>
+
+	<Target Name="CopyAdditionalFilesToLayout" DependsOnTargets="PrepareAdditionalFilesToLayout" AfterTargets="Build" Inputs="@(LayoutFile)" Outputs="@(LayoutFile->'$(PackageLayoutOutputPath)%(TargetPath)')">
+		<Copy SourceFiles="@(LayoutFile)" DestinationFiles="@(LayoutFile->'$(PackageLayoutOutputPath)%(TargetPath)')">
+			<Output TaskParameter="DestinationFiles" ItemName="FileWrites" />
+		</Copy>
+	</Target>
+
+	<Target Name="PackLayout" DependsOnTargets="CopyAdditionalFilesToLayout" BeforeTargets="$(GenerateNuspecDependsOn)">
+		<Message Importance="high" Text="Packing assets at $(PackageLayoutOutputPath)" />
+		<ItemGroup>
+			<Content Include="$(PackageLayoutOutputPath)**\*" PackagePath="\" />
+		</ItemGroup>
+	</Target>
+
+</Project>
