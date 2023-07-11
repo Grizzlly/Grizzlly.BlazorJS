@@ -13,6 +13,9 @@
 		<Description>Build UI with Vue components! React coming soon...</Description>
 		<PackageTags>jsinterop</PackageTags>
 		<Copyright>Copyright ©Andrei Stan 2023</Copyright>
+		<PackageProjectUrl>https://github.com/Grizzlly/Grizzlly.BlazorJS</PackageProjectUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<GenerateDependencyFile>true</GenerateDependencyFile>
 
 		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
