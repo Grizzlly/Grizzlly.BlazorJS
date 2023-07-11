@@ -9,7 +9,6 @@ namespace Grizzlly.BlazorJS.MSBuild
 {
     public class Component : Microsoft.Build.Utilities.Task
     {
-        [Required]
         public string Components { get; set; }
 
         [Required]
