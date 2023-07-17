@@ -2,11 +2,11 @@
 
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
-		<LangVersion>8.0</LangVersion>
+		<LangVersion>9.0</LangVersion>
 		<PackageId>Grizzlly.BlazorJS.MSBuild</PackageId>
 
 		<IsPackable>true</IsPackable>
-		<Version>0.0.1</Version>
+		<Version>0.0.2</Version>
 		<Title>Grizzlly.BlazorJS.MSBuild</Title>
 		<Authors>Andrei Stan</Authors>
 		<Description>Build UI with Vue components! React coming soon...</Description>
@@ -52,6 +52,12 @@
 	<ItemGroup>
 		<Content Update="build\env.d.ts">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Update="build\Grizzlly.BlazorJS.MSBuild.props">
+		  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</Content>
+		<Content Update="build\Grizzlly.BlazorJS.MSBuild.targets">
+		  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</Content>
 		<Content Update="build\main.ts">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

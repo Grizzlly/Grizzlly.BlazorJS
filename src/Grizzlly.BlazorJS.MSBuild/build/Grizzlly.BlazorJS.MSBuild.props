@@ -2,22 +2,18 @@
   <!-- See https://aka.ms/dotnet/msbuild/customize for more details on customizing your build -->
 	<PropertyGroup>
 		<!--The folder where the custom task will be present. It points to inside the nuget package. -->
-		<TaskFolder>$(MSBuildThisFileDirectory)..\tasks\netstandard2.0</TaskFolder>
+		<_BlazorJSTaskFolder Condition="'$(_BlazorJSTaskFolder)' == ''">$(MSBuildThisFileDirectory)..\tasks\netstandard2.0</_BlazorJSTaskFolder>
 		<!--Reference to the assembly which contains the MSBuild Task-->
-		<CustomTasksAssembly>$(TaskFolder)\$(MSBuildThisFileName).dll</CustomTasksAssembly>
+		<CustomTasksAssembly>$(_BlazorJSTaskFolder)\$(MSBuildThisFileName).dll</CustomTasksAssembly>
 	</PropertyGroup>
 
-	<!--Register our custom task-->
-	<UsingTask TaskName="$(MSBuildThisFileName).Component" AssemblyFile="$(CustomTasksAssembly)"/>
+	<!--Register custom task-->
 	<UsingTask TaskName="$(MSBuildThisFileName).GetStaticWebAssets" AssemblyFile="$(CustomTasksAssembly)"/>
 
 	<!--Task parameters default values, this can be overridden-->
 	<PropertyGroup>
-		<!--<RootFolder Condition="'$(RootFolder)' == ''">$(MSBuildProjectDirectory)</RootFolder>
-		<SettingClass Condition="'$(SettingClass)' == ''">MySetting</SettingClass>
-		<SettingNamespace Condition="'$(SettingNamespace)' == ''">example</SettingNamespace>-->
-		<ComponentsOutDir Condition="'$(ComponentsOutDir)' == ''">wwwroot</ComponentsOutDir>
-		<ComponentsFile Condition="'$(ComponentsFile)' == ''">components</ComponentsFile>
+		<ComponentsFileName Condition="'$(ComponentsFileName)' == ''">imports</ComponentsFileName>
+		<NPMPackages Condition="'$(NPMPackages)' == ''"></NPMPackages>
 	</PropertyGroup>
 
 </Project>

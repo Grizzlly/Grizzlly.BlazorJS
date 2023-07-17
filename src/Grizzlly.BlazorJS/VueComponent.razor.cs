@@ -20,7 +20,7 @@ namespace Grizzlly.BlazorJS
         [Parameter]
         public string As { get; set; } = "template";
 
-        [JSImport("attachVueComponent", "vuez")]
+        [JSImport("attachVueComponent", WebAssemblyHostExtensions.ProjectId)]
         [return: JSMarshalAs<JSType.Promise<JSType.Object>>]
         internal static partial Task<JSObject> AttachVueComponent(string elementid, string modulename,
                 string[] attributeKeys, [JSMarshalAs<JSType.Array<JSType.Any>>] object[] attributeValues,
@@ -33,7 +33,7 @@ namespace Grizzlly.BlazorJS
 #nullable disable
         JSObject vueInstance = null;
         JSObject componentInstance = null;
-        private bool disposedValue;
+
         private ElementReference contentRef;
 #nullable enable
         protected override async Task OnAfterRenderAsync(bool firstRender)

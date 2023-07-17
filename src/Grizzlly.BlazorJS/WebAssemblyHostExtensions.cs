@@ -10,11 +10,20 @@ namespace Grizzlly.BlazorJS
 {
     public static class WebAssemblyHostExtensions
     {
+        internal const string ProjectId = "Grizzlly.BlazorJS";
         public static async Task UseJSComponents(this WebAssemblyHost host)
         {
             if (OperatingSystem.IsBrowser())
             {
-                await JSHost.ImportAsync("vuez", "../_content/Grizzlly.BlazorJS.MSBuild/vuez.js");
+                await JSHost.ImportAsync(ProjectId, $"../_content/Grizzlly.BlazorJS.MSBuild/{ProjectId}.js");
+            }
+        }
+
+        public static async Task UseJSComponents(this WebAssemblyHost host, string customPath)
+        {
+            if (OperatingSystem.IsBrowser())
+            {
+                await JSHost.ImportAsync(ProjectId, customPath);
             }
         }
     }

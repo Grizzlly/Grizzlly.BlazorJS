@@ -2,60 +2,41 @@
 
 	<ItemGroup>
 		<VueComponents Include="src/**/*.vue" Condition="'@(VueComponents)' == ''" />
+
+		<NPMImports Include="**/$(ComponentsFileName).js" />
+
 		<Content Include="@(VueComponents)" />
+		<Content Include="@(NPMImports)" />
 	</ItemGroup>
 
-	<Target Name="CopyVueComponents" Inputs="@(VueComponents)" Outputs="@(VueComponents->'$(MSBuildThisFileDirectory)/src/%(RecursiveDir)%(Filename)%(Extension)')">
+	<Target Name="UpdateNPMImports" Inputs="@(NPMImports)" Outputs="$(MSBuildThisFileDirectory)/$(ComponentsFileName).js" >
+		<Copy SourceFiles="@(NPMImports)" DestinationFolder="$(MSBuildThisFileDirectory)" />
+	</Target>
+
+	<Target Name="jscomponents-restore" BeforeTargets="jscomponents-build">
+		<Exec Command="npm install $(NPMPackages)" WorkingDirectory="$(MSBuildThisFileDirectory)" ContinueOnError="true" />
+		<Exec Command="npm install" WorkingDirectory="$(MSBuildThisFileDirectory)" ContinueOnError="true" />
+	</Target>
+
+	<Target Name="CopyJSComponents" Inputs="@(VueComponents)" Outputs="@(VueComponents->'$(MSBuildThisFileDirectory)/src/%(RecursiveDir)%(Filename)%(Extension)')">
 		<Copy SourceFiles="@(VueComponents)" DestinationFolder="$(MSBuildThisFileDirectory)/src" />
 	</Target>
-	<!-- See https://aka.ms/dotnet/msbuild/customize for more details on customizing your build -->
-	<Target Name="BeforeResolveReferences" DependsOnTargets="CopyVueComponents">
 
-		<Component Components="$(Components)" VueComponents="@(VueComponents)" ComponentsOut="$(MSBuildThisFileDirectory)/$(ComponentsFile)">
-			<Output TaskParameter="ComponentsFileName" PropertyName="ComponentsOutputFile"/>
-			<Output TaskParameter="PackagesList" PropertyName="NPMPackages" />
-		</Component>
-		<Exec Command="npm install $(NPMPackages)" WorkingDirectory="$(MSBuildThisFileDirectory)"/>
-	</Target>
+	<Target Name="jscomponents-build" BeforeTargets="ResolveProjectStaticWebAssets" DependsOnTargets="CopyJSComponents;UpdateNPMImports">
+		<!--Make sure imports.js exists-->
+		<WriteLinesToFile File="$(MSBuildThisFileDirectory)/imports.js" />
 
-	<Target Name="vue-restore" BeforeTargets="vue-build">
-		<Exec Command="npm install" WorkingDirectory="$(MSBuildThisFileDirectory)"/>
-	</Target>
-
-	<Target Name="vue-build" BeforeTargets="ResolveProjectStaticWebAssets">
 		<Exec Command="npm run build" WorkingDirectory="$(MSBuildThisFileDirectory)" />
+
 		<ItemGroup>
-			<FilesToMove Include="$(MSBuildThisFileDirectory)\out\*"/>
+			<FilesToMove Include="$(MSBuildThisFileDirectory)/out/*"/>
 		</ItemGroup>
-		<!--<Message Text="Moving Files @(FilesToMove)"/>
-		<Move SourceFiles="@(FilesToMove)" DestinationFolder="$(ComponentsOutDir)">
-			<Output
-			   TaskParameter="DestinationFiles"
-			   ItemName="FilesWritten"/>
-		</Move>
-		<Message Text="@(FilesWritten)"/>-->
-		<!--<StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)\out\vuez.js))">
-			<SourceType>Package</SourceType>
-			<SourceId>Grizzlly.BlazorJS.MSBuild</SourceId>
-			<ContentRoot>$(MSBuildThisFileDirectory)\out\</ContentRoot>
-			<BasePath>_content/Grizzlly.BlazorJS.MSBuild</BasePath>
-			<RelativePath>vuez.js</RelativePath>
-			<AssetKind>All</AssetKind>
-			<AssetMode>All</AssetMode>
-			<AssetRole>Primary</AssetRole>
-			<RelatedAsset></RelatedAsset>
-			<AssetTraitName></AssetTraitName>
-			<AssetTraitValue></AssetTraitValue>
-			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
-			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-			<OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)\out\vuez.js))</OriginalItemSpec>
-		</StaticWebAsset>-->
 
 		<GetStaticWebAssets
 		  Candidates="@(FilesToMove)"
 		  SourceId="Grizzlly.BlazorJS.MSBuild"
 		  Pattern="**/*"
-		  ContentRoot="$(MSBuildThisFileDirectory)out\"
+		  ContentRoot="$(MSBuildThisFileDirectory)/out/"
 		  BasePath="_content/Grizzlly.BlazorJS.MSBuild"
 		>
 			<Output TaskParameter="DiscoveredStaticWebAssets" ItemName="StaticWebAsset" />
@@ -65,14 +46,14 @@
 			<StaticWebAssetDiscoveryPattern Include="$(MSBuildThisFileDirectory)/out" Condition="Exists('$(MSBuildThisFileDirectory)/out')">
 				<Source>Grizzlly.BlazorJS.MSBuild</Source>
 				<BasePath>_content/Grizzlly.BlazorJS.MSBuild/</BasePath>
-				<ContentRoot>$(MSBuildThisFileDirectory)out\</ContentRoot>
+				<ContentRoot>$(MSBuildThisFileDirectory)/out/</ContentRoot>
 				<Pattern>**</Pattern>
 			</StaticWebAssetDiscoveryPattern>
 			<Content Remove="@(StaticWebAsset)" />
 		</ItemGroup>
 	</Target>
 
-	<Target Name="vue-clean" AfterTargets="Clean" >
+	<Target Name="jscomponents-clean" AfterTargets="Clean" >
 		<Exec Command="npm run clean" WorkingDirectory="$(MSBuildThisFileDirectory)" />
 	</Target>
 </Project>

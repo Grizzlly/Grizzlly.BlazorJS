@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grizzlly.BlazorJS.MSBuild.Test", "test\Grizzlly.BlazorJS.MSBuild.Test\Grizzlly.BlazorJS.MSBuild.Test.csproj", "{E3A9B283-D97C-46C8-AD30-DF3F9585206B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{25340CCA-DE43-4D8A-9536-DB75DFFB83F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{25340CCA-DE43-4D8A-9536-DB75DFFB83F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{25340CCA-DE43-4D8A-9536-DB75DFFB83F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3A9B283-D97C-46C8-AD30-DF3F9585206B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3A9B283-D97C-46C8-AD30-DF3F9585206B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3A9B283-D97C-46C8-AD30-DF3F9585206B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3A9B283-D97C-46C8-AD30-DF3F9585206B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -47,6 +53,7 @@ Global
 		{9D7FF008-FA1E-43B6-9A52-2EFA07953C28} = {AAA07058-90F0-43D5-9B1F-52A695E57554}
 		{1F82B474-01D0-4314-BD82-7B10B0CA9CD6} = {AAA07058-90F0-43D5-9B1F-52A695E57554}
 		{25340CCA-DE43-4D8A-9536-DB75DFFB83F0} = {F2B97CA5-DDBE-4F8B-8406-EDB503E67467}
+		{E3A9B283-D97C-46C8-AD30-DF3F9585206B} = {F2B97CA5-DDBE-4F8B-8406-EDB503E67467}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {40A8B93C-2664-469A-866B-E2E6F2D384DB}

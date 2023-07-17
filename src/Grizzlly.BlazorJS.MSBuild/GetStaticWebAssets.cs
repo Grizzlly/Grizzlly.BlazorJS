@@ -44,6 +44,7 @@ namespace Grizzlly.BlazorJS.MSBuild
                     var candidate = Candidates[i];
                     var candidateMatchPath = GetCandidateMatchPath(candidate);
                     var candidateRelativePath = candidateMatchPath;
+
                     if (string.IsNullOrEmpty(candidate.GetMetadata("RelativePath")))
                     {
                         var match = matcher.Match(ContentRoot, candidateRelativePath);

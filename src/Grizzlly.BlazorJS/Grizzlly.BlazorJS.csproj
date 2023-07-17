@@ -7,7 +7,7 @@
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
 		<IsPackable>true</IsPackable>
-		<Version>0.0.1</Version>
+		<Version>0.0.2</Version>
 		<Title>Grizzlly.BlazorJS</Title>
 		<Authors>Andrei Stan</Authors>
 		<Description>Build UI with Vue components! React coming soon...</Description>
@@ -32,11 +32,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Include="build\*" PackagePath="build\" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="build\" />
+	  <Folder Include="wwwroot\" />
 	</ItemGroup>
 
 </Project>

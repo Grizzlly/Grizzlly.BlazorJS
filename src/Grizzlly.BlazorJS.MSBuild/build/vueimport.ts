@@ -7,7 +7,7 @@ export async function attachVueComponent(
     attributeValues: object[],
     provider: (s: string, o: object | null) => void
 ) {
-    const modules = (await import("./components")) as any;
+    const modules = (await import("./imports")) as any;
 
     const module = modules[modulename] as Component;
 

@@ -25,7 +25,6 @@ namespace Grizzlly.BlazorJS.MSBuild
 
         public override bool Execute()
         {
-            Log.LogMessage("Executing task");
             var (success, components) = GetJSComponents();
             if (!success)
             {
@@ -104,6 +103,11 @@ namespace Grizzlly.BlazorJS.MSBuild
 
         private (bool, Dictionary<string, string[]>) GetJSComponents()
         {
+            if (Components == string.Empty)
+            {
+                return (true, new());
+            }
+
             var values = new Dictionary<string, string[]>();
             var imports = Components.Split(';');
             foreach (var import in imports)
