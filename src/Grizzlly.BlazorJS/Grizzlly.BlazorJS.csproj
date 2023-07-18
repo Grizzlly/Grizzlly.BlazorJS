@@ -15,6 +15,7 @@
 		<Copyright>Copyright ©Andrei Stan 2023</Copyright>
 		<PackageProjectUrl>https://github.com/Grizzlly/Grizzlly.BlazorJS</PackageProjectUrl>
 		<RepositoryType>git</RepositoryType>
+		<RepositoryUrl>https://github.com/Grizzlly/Grizzlly.BlazorJS</RepositoryUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<GenerateDependencyFile>true</GenerateDependencyFile>
 
