@@ -1,23 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
+	<Import Project="../../CommonProject.xml"/>
+
 	<PropertyGroup>
 		<TargetFramework>net7.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
-		<IsPackable>true</IsPackable>
-		<Version>0.0.2</Version>
+		<PackageId>Grizzlly.BlazorJS</PackageId>
 		<Title>Grizzlly.BlazorJS</Title>
-		<Authors>Andrei Stan</Authors>
-		<Description>Build UI with Vue components! React coming soon...</Description>
-		<PackageTags>jsinterop</PackageTags>
-		<Copyright>Copyright ©Andrei Stan 2023</Copyright>
-		<PackageProjectUrl>https://github.com/Grizzlly/Grizzlly.BlazorJS</PackageProjectUrl>
-		<RepositoryType>git</RepositoryType>
-		<RepositoryUrl>https://github.com/Grizzlly/Grizzlly.BlazorJS</RepositoryUrl>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<GenerateDependencyFile>true</GenerateDependencyFile>
 
 		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
 	</PropertyGroup>
