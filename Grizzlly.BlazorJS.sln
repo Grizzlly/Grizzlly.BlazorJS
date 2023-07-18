@@ -18,10 +18,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		LICENSE.txt = LICENSE.txt
+		CommonProject.xml = CommonProject.xml
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grizzlly.BlazorJS.MSBuild.Test", "test\Grizzlly.BlazorJS.MSBuild.Test\Grizzlly.BlazorJS.MSBuild.Test.csproj", "{E3A9B283-D97C-46C8-AD30-DF3F9585206B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grizzlly.BlazorJS.MSBuild.Test", "test\Grizzlly.BlazorJS.MSBuild.Test\Grizzlly.BlazorJS.MSBuild.Test.csproj", "{E3A9B283-D97C-46C8-AD30-DF3F9585206B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{733D8E63-028D-48EC-91FE-3924939EF4A6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{BF931F52-821C-4256-8DC2-6498D185BC34}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnet-test.yml = .github\workflows\dotnet-test.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +62,7 @@ Global
 		{1F82B474-01D0-4314-BD82-7B10B0CA9CD6} = {AAA07058-90F0-43D5-9B1F-52A695E57554}
 		{25340CCA-DE43-4D8A-9536-DB75DFFB83F0} = {F2B97CA5-DDBE-4F8B-8406-EDB503E67467}
 		{E3A9B283-D97C-46C8-AD30-DF3F9585206B} = {F2B97CA5-DDBE-4F8B-8406-EDB503E67467}
+		{BF931F52-821C-4256-8DC2-6498D185BC34} = {733D8E63-028D-48EC-91FE-3924939EF4A6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {40A8B93C-2664-469A-866B-E2E6F2D384DB}
