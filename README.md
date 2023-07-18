@@ -92,3 +92,4 @@ There is a sample project called `BlazorWASM` in the `test` folder.
 provides the ability to use UI frameworks that require this step such as
 [Chakra UI](https://chakra-ui.com/).
 - Ability to use React components.
+- Ability to render Blazor components inside Vue/React components.
